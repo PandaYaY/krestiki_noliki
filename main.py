@@ -1,4 +1,4 @@
-import os
+import config
 from bot import bot
 
 
@@ -28,15 +28,16 @@ def try_input(a):
             print(mistake)
 
         try:  # защита от текста
-            act = int(input('Ваш ход(11, 13...(строка, столбец): '))
+            act = int(input('Ваш ход(номер ячейки): '))
         except ValueError:
             mistake = 'Это не цифры!!!'
             continue
 
-        string = act // 10 - 1
-        column = act % 10 - 1
+        x = act - 1
+        string = x // 3
+        column = x % 3
 
-        if not(act in [11, 12, 13, 21, 22, 23, 31, 32, 33]):  # если написал не ячейку
+        if act not in [1, 2, 3, 4, 5, 6, 7, 8, 9]:  # если написал не ячейку
             mistake = 'Таких ячеек нет на поле!!!'
             continue
         elif a[string][column] != 0:
@@ -64,12 +65,14 @@ def two_player_step(a, player):  # для 2-х игроков
 
 
 def print_place(a):
-    os.system('cls')  # очистка экрана
+    case_num = 0
+    config.clr_scr()  # очистка экрана
     for string in a:
         print('-' * 13 + '\n|', end='')
         for i in string:
+            case_num += 1
             if i == 0:
-                i = '-'
+                i = case_num
             print(f' {i} |', end='')
         print()
     print('-' * 13)
@@ -100,8 +103,7 @@ def game(mode):
             break
 
 
-cmd = 'mode 40, 10'
-os.system(cmd)
+config.window_size()
 
 while True:
     print('Игра "Крестики нолики"\n'
@@ -113,11 +115,11 @@ while True:
     try:  # проверка на ошибки
         game_mode = int(input('Ввод: '))
     except ValueError:
-        os.system('cls')
+        config.clr_scr()
         print('Это не цифры!!!')
         continue
     if game_mode not in [1, 2, 3]:
-        os.system('cls')
+        config.clr_scr()
         print('Не те цифры...')
         continue
 
@@ -130,5 +132,5 @@ while True:
         if repeat == 'y':
             continue
         else:
-            os.system('cls')
+            config.clr_scr()
             break

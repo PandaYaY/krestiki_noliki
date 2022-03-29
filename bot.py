@@ -42,7 +42,7 @@ def analyze(a):
 
     for line, item in situation.items():
         if abs(item['X'] - item['O']) == 2:
-            if item['O'] == 0:
+            if item['X'] == 0:
                 win_line = line
                 break
             else:
